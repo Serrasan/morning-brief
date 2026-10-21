@@ -195,15 +195,7 @@
 
   /* ================================================================ MACRO */
   function renderMacro() {
-    $("#t-publicados").innerHTML = `
-      <thead><tr><th>Fecha</th><th>País</th><th>Indicador</th><th class="n">Actual</th><th class="n">Consenso</th><th class="n">Sorpresa</th><th class="n">Anterior</th><th>Nota</th></tr></thead>
-      <tbody>${B.publicados.map(r => {
-        const dec = r.dec ?? 1;
-        const fmt = v => v === null ? "—" : nf(v, dec) + r.u;
-        const sorp = r.e === null ? `<span class="chg flat">—</span>` : chg(r.a - r.e, { d: dec, suf: r.u === "%" ? " pp" : "" });
-        return `<tr><td class="dim mono">${r.f}</td><td>${cc(r.p)}</td><td class="strong">${r.n}</td><td class="n strong">${fmt(r.a)}</td>
-          <td class="n dim">${fmt(r.e)}</td><td class="n">${sorp}</td><td class="n dim">${fmt(r.prev)}</td><td class="dim" style="white-space:normal;min-width:180px;font-size:12px">${r.nota || ""}</td></tr>`;
-      }).join("")}</tbody>`;
+    renderPublicadas();
 
     // Inflación: tinte secuencial (un tono) según nivel
     const I = B.inflacion;
@@ -236,7 +228,27 @@
   const impBadge = i => `<span class="imp ${i}" title="Importancia ${i}"><i></i><i></i><i></i></span>`;
   const evTime = (fecha, hora) => { const d = parseISO(fecha); if (hora) { const [h, m] = hora.split(":").map(Number); d.setHours(h, m); } else d.setHours(23, 59); return d; };
   const isPast = (fecha, hora) => evTime(fecha, hora) < NOW;
-  const parseNum = s => { if (!s) return null; const m = String(s).replace(/\./g, "").replace(",", ".").match(/-?\d+(\.\d+)?/); return m ? parseFloat(m[0]) : null; };
+  const parseNum = s => { if (!s) return null; const m = String(s).replace(/[^\d,.\-]/g, "").replace(/\./g, "").replace(",", ".").match(/-?\d+(\.\d+)?/); return m ? parseFloat(m[0]) : null; };
+  const decs = s => { const m = String(s).match(/,(\d+)/); return m ? Math.min(m[1].length, 2) : 0; };
+  function renderPublicadas() {
+    const rows = CAL.dias.flatMap(d => d.eventos.filter(e => e.actual).map(e => ({ ...e, fecha: d.fecha, dia: d.dia })));
+    let up = 0, dn = 0;
+    $("#t-publicados").innerHTML = rows.length ? `
+      <thead><tr><th>Día</th><th>Hora</th><th>País</th><th>Indicador</th><th>Periodo</th><th class="n">Actual</th><th class="n">Consenso</th><th class="n">Sorpresa</th><th class="n">Anterior</th></tr></thead>
+      <tbody>${rows.map(e => {
+        const a = parseNum(e.actual), es = parseNum(e.est);
+        let sorp = `<span class="chg flat">—</span>`;
+        if (a !== null && es !== null) {
+          const d = Math.max(decs(e.actual), decs(e.est)), diff = a - es;
+          if (Math.round(diff * 100) > 0) up++; else if (Math.round(diff * 100) < 0) dn++;
+          sorp = chg(diff, { d: Math.min(d, 2), suf: e.actual.includes("%") ? " pp" : "" });
+        }
+        return `<tr><td class="dim">${e.dia.slice(0, 3)} ${parseISO(e.fecha).getDate()}</td><td class="mono dim">${e.hora}</td><td>${cc(e.pais)}</td>
+          <td class="strong">${impBadge(e.imp)} ${e.dato}</td><td class="dim">${e.periodo}</td><td class="n strong mono">${e.actual}</td>
+          <td class="n dim mono">${e.est || "—"}${e.est_fuente ? "*" : ""}</td><td class="n">${sorp}</td><td class="n dim mono">${e.ultimo || "—"}</td></tr>`;
+      }).join("")}</tbody>` : `<tbody><tr><td class="empty">Aún no hay datos publicados esta semana.</td></tr></tbody>`;
+    $("#pub-meta").textContent = `${rows.length} datos · ${up} por encima y ${dn} por debajo del consenso`;
+  }
 
   function calDefaultDay() {
     const days = CAL.dias.map(d => d.fecha);
@@ -248,6 +260,8 @@
   function renderCalendario() {
     if (!CAL.dias.length) { $("#v-calendario").innerHTML = `<div class="empty">Sin calendario. Ejecuta scripts/actualizar_calendario.py.</div>`; return; }
     calState.dia ||= calDefaultDay();
+    { const a = parseISO(CAL.dias[0].fecha), z = parseISO(CAL.dias[CAL.dias.length - 1].fecha);
+      $("#cal-semana").textContent = `Semana del ${a.getDate()} al ${z.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}`; }
     $("#cal-days").innerHTML = CAL.dias.map(d => {
       const n = d.eventos.length, alta = d.eventos.filter(e => e.imp === "alta").length;
       return `<button class="day" data-f="${d.fecha}" aria-pressed="${d.fecha === calState.dia}">

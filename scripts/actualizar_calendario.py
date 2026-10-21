@@ -194,7 +194,13 @@ def main() -> None:
                 continue
             ev["id"] = f'{d.isoformat()}|{ev["pais"]}|{ev["dato"]}'
             ev["imp"] = importancia(ev, reglas)
-            ev["actual"] = actuales.get(ev["id"], "")
+            a = actuales.get(ev["id"], "")
+            if isinstance(a, dict):  # {"actual": ..., "est": ...}: est solo si el Excel no lo trae
+                if not ev["est"] and a.get("est"):
+                    ev["est"] = a["est"]
+                    ev["est_fuente"] = "mercado"
+                a = a.get("actual", "")
+            ev["actual"] = a
             eventos.append(ev)
         eventos.sort(key=lambda e: e["hora"] or "99:99")
         dias_out.append({"fecha": d.isoformat(), "dia": dia.capitalize(), "eventos": eventos})

@@ -2,7 +2,7 @@
 window.CALENDARIO = {
  "hoja": "19 - 23 Octubre",
  "semana": "2026-10-19",
- "generado": "2026-10-21 09:49",
+ "generado": "2026-10-21 10:09",
  "dias": [
   {
    "fecha": "2026-10-19",
@@ -17,7 +17,7 @@ window.CALENDARIO = {
      "ultimo": "4,30%",
      "id": "2026-10-19|CN|PIB YoY",
      "imp": "alta",
-     "actual": ""
+     "actual": "4,50%"
     },
     {
      "hora": "04:00",
@@ -28,7 +28,7 @@ window.CALENDARIO = {
      "ultimo": "0,90%",
      "id": "2026-10-19|CN|PIB QoQ",
      "imp": "alta",
-     "actual": ""
+     "actual": "1,20%"
     },
     {
      "hora": "04:00",
@@ -39,7 +39,7 @@ window.CALENDARIO = {
      "ultimo": "0,40%",
      "id": "2026-10-19|CN|Ventas minoristas YoY",
      "imp": "media",
-     "actual": ""
+     "actual": "1,10%"
     },
     {
      "hora": "04:00",
@@ -50,7 +50,7 @@ window.CALENDARIO = {
      "ultimo": "5,20%",
      "id": "2026-10-19|CN|Producción industrial YoY",
      "imp": "media",
-     "actual": ""
+     "actual": "5,50%"
     }
    ]
   },
@@ -63,22 +63,24 @@ window.CALENDARIO = {
      "pais": "DE",
      "dato": "PPI MoM",
      "periodo": "Sept",
-     "est": "",
+     "est": "1,50%",
      "ultimo": "1,10%",
      "id": "2026-10-20|DE|PPI MoM",
      "imp": "alta",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "1,90%"
     },
     {
      "hora": "08:00",
      "pais": "DE",
      "dato": "PPI YoY",
      "periodo": "Sept",
-     "est": "",
+     "est": "6,20%",
      "ultimo": "4,60%",
      "id": "2026-10-20|DE|PPI YoY",
      "imp": "media",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "6,70%"
     },
     {
      "hora": "08:00",
@@ -89,7 +91,7 @@ window.CALENDARIO = {
      "ultimo": "4,90%",
      "id": "2026-10-20|UK|Desempleo",
      "imp": "media",
-     "actual": ""
+     "actual": "4,70%"
     },
     {
      "hora": "08:00",
@@ -140,11 +142,12 @@ window.CALENDARIO = {
      "pais": "DE",
      "dato": "ZEW Expectativas",
      "periodo": "Oct",
-     "est": "",
+     "est": "30,0",
      "ultimo": "34,7",
      "id": "2026-10-20|DE|ZEW Expectativas",
      "imp": "alta",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "28,1"
     },
     {
      "hora": "11:00",
@@ -155,18 +158,19 @@ window.CALENDARIO = {
      "ultimo": "-47,1",
      "id": "2026-10-20|DE|ZEW Situación actual",
      "imp": "media",
-     "actual": ""
+     "actual": "-35,9"
     },
     {
      "hora": "11:00",
      "pais": "EZ",
      "dato": "Sentim. econ. ZEW",
      "periodo": "Oct",
-     "est": "",
+     "est": "23,6",
      "ultimo": "25,8",
      "id": "2026-10-20|EZ|Sentim. econ. ZEW",
      "imp": "media",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "18,5"
     },
     {
      "hora": "14:30",
@@ -177,7 +181,7 @@ window.CALENDARIO = {
      "ultimo": "1.275m",
      "id": "2026-10-20|US|Construcciones iniciales",
      "imp": "media",
-     "actual": ""
+     "actual": "1.221m"
     },
     {
      "hora": "14:30",
@@ -188,7 +192,7 @@ window.CALENDARIO = {
      "ultimo": "1.403m",
      "id": "2026-10-20|US|Permisos de construcción",
      "imp": "media",
-     "actual": ""
+     "actual": "1.400m"
     },
     {
      "hora": "16:00",
@@ -199,7 +203,7 @@ window.CALENDARIO = {
      "ultimo": "0,30%",
      "id": "2026-10-20|US|Ventas pendientes viviendas MoM",
      "imp": "media",
-     "actual": ""
+     "actual": "-7,30%"
     }
    ]
   },
@@ -212,44 +216,48 @@ window.CALENDARIO = {
      "pais": "JP",
      "dato": "Balanza comercial",
      "periodo": "Sept",
-     "est": "",
+     "est": "-¥181,0bn",
      "ultimo": "-¥1.111,9bn",
      "id": "2026-10-21|JP|Balanza comercial",
      "imp": "media",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "-¥536,6bn"
     },
     {
      "hora": "01:50",
      "pais": "JP",
      "dato": "Exportaciones YoY",
      "periodo": "Sept",
-     "est": "",
+     "est": "20,10%",
      "ultimo": "19,30%",
      "id": "2026-10-21|JP|Exportaciones YoY",
      "imp": "baja",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "16,70%"
     },
     {
      "hora": "01:50",
      "pais": "JP",
      "dato": "Importaciones YoY",
      "periodo": "Sept",
-     "est": "",
+     "est": "19,60%",
      "ultimo": "28,00%",
      "id": "2026-10-21|JP|Importaciones YoY",
      "imp": "baja",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "18,90%"
     },
     {
      "hora": "08:00",
      "pais": "UK",
      "dato": "IPC MoM",
      "periodo": "Sept",
-     "est": "",
+     "est": "0,30%",
      "ultimo": "0,50%",
      "id": "2026-10-21|UK|IPC MoM",
      "imp": "alta",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "0,40%"
     },
     {
      "hora": "08:00",
@@ -260,18 +268,19 @@ window.CALENDARIO = {
      "ultimo": "3,10%",
      "id": "2026-10-21|UK|IPC YoY",
      "imp": "alta",
-     "actual": ""
+     "actual": "3,50%"
     },
     {
      "hora": "08:00",
      "pais": "UK",
      "dato": "IPC Suby. YoY",
      "periodo": "Sept",
-     "est": "",
+     "est": "2,80%",
      "ultimo": "2,60%",
      "id": "2026-10-21|UK|IPC Suby. YoY",
      "imp": "alta",
-     "actual": ""
+     "est_fuente": "mercado",
+     "actual": "2,80%"
     },
     {
      "hora": "13:00",

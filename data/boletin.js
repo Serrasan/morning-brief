@@ -129,22 +129,6 @@ window.BRIEF = {
     { n: "Plata", u: "$/oz", v: [57.50, -2.82, -9.70, 8.43] }
   ],
 
-  // Publicaciones de la semana pasada: actual / estimado / previo
-  publicados: [
-    { f: "14/10", p: "US", n: "IPC YoY (sep)", a: 3.7, e: 3.6, prev: 3.4, u: "%" },
-    { f: "14/10", p: "US", n: "IPC subyacente YoY (sep)", a: 2.6, e: 2.5, prev: 2.4, u: "%" },
-    { f: "14/10", p: "US", n: "IPC MoM (sep)", a: 0.6, e: 0.6, prev: 0.4, u: "%" },
-    { f: "15/10", p: "US", n: "PPI MoM (sep)", a: 1.3, e: 0.6, prev: 0.5, u: "%" },
-    { f: "15/10", p: "US", n: "Ventas minoristas MoM (sep)", a: 0.8, e: 0.3, prev: 1.3, u: "%", nota: "Control group +0,1% (prev. +1,2%); ex-gasolina +0,2%" },
-    { f: "15/10", p: "US", n: "Empire State (oct)", a: 25.5, e: null, prev: 7.6, u: "" },
-    { f: "15/10", p: "US", n: "Peticiones iniciales (k)", a: 199, e: 200, prev: 198, u: "", dec: 0 },
-    { f: "16/10", p: "US", n: "Producción industrial MoM (sep)", a: 0.7, e: 0.4, prev: 0.1, u: "%" },
-    { f: "13/10", p: "US", n: "NFIB confianza PYMES (sep)", a: 97.9, e: 98.0, prev: 98.7, u: "" },
-    { f: "15/10", p: "EZ", n: "Producción industrial MoM (ago)", a: -0.5, e: 0.0, prev: -0.3, u: "%" },
-    { f: "16/10", p: "EZ", n: "Balanza comercial (ago, bn €)", a: -16.1, e: null, prev: 10.7, u: "" },
-    { f: "16/10", p: "IT", n: "Balanza comercial (ago, bn €)", a: 1.77, e: 7.5, prev: 8.24, u: "", dec: 2 }
-  ],
-
   // Inflación: [valor, Δ1m]; null = no disponible
   inflacion: {
     cols: ["IPC YoY", "Subyacente YoY", "IPCA / PCE YoY", "PPI YoY"],

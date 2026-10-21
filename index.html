@@ -155,8 +155,9 @@
     <section class="view" id="v-macro">
       <div class="grid g-12">
         <div class="card span-12">
-          <div class="card-h"><h2>Publicaciones de la semana pasada</h2><span class="meta">dato vs consenso</span></div>
+          <div class="card-h"><h2>Publicaciones de esta semana</h2><span class="meta" id="pub-meta"></span><span class="right"><a href="#calendario" class="meta" style="color:var(--accent);text-decoration:none">Calendario →</a></span></div>
           <div class="card-b flush tbl-wrap"><table id="t-publicados"></table></div>
+          <p class="note" style="padding:0 16px 14px">Consenso del calendario semanal; * consenso de mercado cuando el calendario no lo recoge. Sorpresa = dato − consenso.</p>
         </div>
         <div class="card span-7">
           <div class="card-h"><h2>Inflación</h2><span class="meta">% interanual · Δ vs mes anterior</span></div>
@@ -186,6 +187,7 @@
 
     <!-- CALENDARIO -->
     <section class="view" id="v-calendario">
+      <h3 class="section-title" id="cal-semana" style="margin-top:4px"></h3>
       <div class="days" id="cal-days"></div>
       <div class="toolbar">
         <div class="chips" id="cal-paises"></div>
