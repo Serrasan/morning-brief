@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Morning Brief</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231c5cab'/%3E%3Cpath d='M7 22l6-7 5 4 7-9' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-row">
+        <div class="brand">
+          <h1>Morning Brief</h1>
+          <span class="sub">Tesorería y Mercados de Capitales</span>
+        </div>
+        <div class="today">
+          <div class="d" id="hoy-txt"></div>
+          <div class="f" id="fuente-txt"></div>
+        </div>
+        <button class="icon-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button class="tab" role="tab" data-view="resumen">Resumen</button>
+        <button class="tab" role="tab" data-view="tipos">Tipos y curvas</button>
+        <button class="tab" role="tab" data-view="mercados">Mercados</button>
+        <button class="tab" role="tab" data-view="macro">Macro</button>
+        <button class="tab" role="tab" data-view="calendario">Calendario</button>
+        <button class="tab" role="tab" data-view="rf">Renta fija</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- RESUMEN -->
+    <section class="view" id="v-resumen">
+      <div class="kpis" id="kpis"></div>
+      <div class="grid g-12" style="margin-top:16px">
+        <div class="card span-7">
+          <div class="card-h"><h2>Claves de la semana</h2><span class="meta" id="claves-meta"></span></div>
+          <div class="card-b"><ul class="claves" id="claves"></ul></div>
+        </div>
+        <div class="stack span-5">
+          <div class="card">
+            <div class="card-h"><h2 id="hoy-cal-title">Hoy en el calendario</h2><span class="right"><a href="#calendario" class="meta" style="color:var(--accent);text-decoration:none">Semana completa →</a></span></div>
+            <ul class="today-list" id="hoy-cal"></ul>
+          </div>
+          <div class="card">
+            <div class="card-h"><h2>Probabilidad de subida</h2><span class="meta">implícita por reunión</span>
+              <span class="right"><span class="seg" id="seg-res-prob"><button aria-pressed="true" data-k="BCE">BCE</button><button aria-pressed="false" data-k="Fed">Fed</button></span></span>
+            </div>
+            <div class="card-b">
+              <div class="legend"><span><span class="swatch" style="background:var(--s1)"></span>Cierre 16/10</span><span><span class="swatch" style="background:var(--muted-mark)"></span>Semana anterior</span></div>
+              <div class="chart sm"><canvas id="c-res-prob" aria-label="Probabilidad de subida por reunión"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIPOS -->
+    <section class="view" id="v-tipos">
+      <h3 class="section-title">Política monetaria</h3>
+      <div class="grid g-12">
+        <div class="card span-5">
+          <div class="card-h"><h2>Tipos oficiales</h2><span class="meta">%</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-bancos"></table></div>
+        </div>
+        <div class="card span-7">
+          <div class="card-h"><h2>Probabilidad implícita de subida</h2><span class="meta">% por reunión · 16/10 vs 09/10</span></div>
+          <div class="card-b">
+            <div class="legend"><span><span class="swatch" style="background:var(--s1)"></span>Cierre 16/10</span><span><span class="swatch" style="background:var(--muted-mark)"></span>Semana anterior</span></div>
+            <div class="grid g-2">
+              <div><div class="meta dim" style="font-size:12px;margin-bottom:4px">BCE</div><div class="chart sm"><canvas id="c-prob-bce"></canvas></div></div>
+              <div><div class="meta dim" style="font-size:12px;margin-bottom:4px">Fed</div><div class="chart sm"><canvas id="c-prob-fed"></canvas></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card span-7">
+          <div class="card-h"><h2>Mercado monetario EUR</h2><span class="meta">%</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-monetario"></table></div>
+        </div>
+        <div class="card span-5">
+          <div class="card-h"><h2>Liquidez Eurosistema</h2><span class="meta" id="liq-meta"></span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-liquidez"></table></div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Deuda pública</h3>
+      <div class="grid g-12">
+        <div class="card span-12">
+          <div class="card-h"><h2>Curvas soberanas</h2><span class="meta">TIR % · cotizaciones 16/10</span></div>
+          <div class="card-b">
+            <div class="legend" id="lg-curvas"></div>
+            <div class="chart lg"><canvas id="c-curvas" aria-label="Curvas soberanas"></canvas></div>
+          </div>
+        </div>
+        <div class="card span-7">
+          <div class="card-h"><h2>Rentabilidades</h2><span class="meta">TIR % · Δ en p.b.</span>
+            <span class="right"><span class="seg" id="seg-plazo"><button data-k="2A" aria-pressed="false">2A</button><button data-k="5A" aria-pressed="false">5A</button><button data-k="10A" aria-pressed="true">10A</button></span></span>
+          </div>
+          <div class="card-b flush tbl-wrap"><table id="t-soberanos"></table></div>
+        </div>
+        <div class="card span-5">
+          <div class="card-h"><h2>Diferenciales vs Bund</h2><span class="meta" id="spr-meta">p.b.</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-spreads"></table></div>
+        </div>
+        <div class="card span-6">
+          <div class="card-h"><h2>Pendiente 2s10s</h2><span class="meta">p.b.</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-pend"></table></div>
+        </div>
+        <div class="card span-6">
+          <div class="card-h"><h2>Swaps</h2><span class="meta">%</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-swaps"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MERCADOS -->
+    <section class="view" id="v-mercados">
+      <div class="grid g-12">
+        <div class="card span-7">
+          <div class="card-h"><h2>Bolsas</h2><span class="meta">variación %</span>
+            <span class="right"><span class="seg" id="seg-bolsa"><button data-k="1" aria-pressed="true">1 sem</button><button data-k="2" aria-pressed="false">1 mes</button><button data-k="3" aria-pressed="false">1 año</button></span></span>
+          </div>
+          <div class="card-b"><div class="chart"><canvas id="c-bolsas" aria-label="Variación bolsas"></canvas></div></div>
+        </div>
+        <div class="card span-5">
+          <div class="card-h"><h2>Índices</h2><span class="meta">cierre 16/10</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-bolsas"></table></div>
+        </div>
+        <div class="card span-4">
+          <div class="card-h"><h2>Crédito</h2><span class="meta">CDS índices, p.b.</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-credito"></table></div>
+        </div>
+        <div class="card span-4">
+          <div class="card-h"><h2>Divisas</h2><span class="meta">spot</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-divisas"></table></div>
+        </div>
+        <div class="card span-4">
+          <div class="card-h"><h2>Materias primas y volatilidad</h2></div>
+          <div class="card-b flush tbl-wrap"><table id="t-materias"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MACRO -->
+    <section class="view" id="v-macro">
+      <div class="grid g-12">
+        <div class="card span-12">
+          <div class="card-h"><h2>Publicaciones de la semana pasada</h2><span class="meta">dato vs consenso</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-publicados"></table></div>
+        </div>
+        <div class="card span-7">
+          <div class="card-h"><h2>Inflación</h2><span class="meta">% interanual · Δ vs mes anterior</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-inflacion"></table></div>
+          <p class="note" style="padding:0 16px 14px" id="infl-nota"></p>
+        </div>
+        <div class="card span-5">
+          <div class="card-h"><h2>PMI</h2><span class="meta">sep-26 · umbral 50</span></div>
+          <div class="card-b flush tbl-wrap"><table id="t-pmi"></table></div>
+        </div>
+        <div class="card span-7">
+          <div class="card-h"><h2>Previsiones de crecimiento</h2><span class="meta">PIB real %</span>
+            <span class="right"><span class="seg" id="seg-pib"><button data-k="26" aria-pressed="true">2026</button><button data-k="27" aria-pressed="false">2027</button></span></span>
+          </div>
+          <div class="card-b">
+            <div class="legend"><span><span class="swatch" style="background:var(--s1)"></span>FMI (oct)</span><span><span class="swatch" style="background:var(--s2)"></span>OCDE</span></div>
+            <div class="chart"><canvas id="c-pib" aria-label="Previsiones PIB"></canvas></div>
+          </div>
+        </div>
+        <div class="card span-5">
+          <div class="card-h"><h2>Crecimiento, deuda y empleo</h2></div>
+          <div class="card-b flush tbl-wrap"><table id="t-pib"></table></div>
+          <div class="card-b flush tbl-wrap" style="margin-top:6px"><table id="t-empleo"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section class="view" id="v-calendario">
+      <div class="days" id="cal-days"></div>
+      <div class="toolbar">
+        <div class="chips" id="cal-paises"></div>
+        <span class="seg" id="cal-imp"><button data-k="todas" aria-pressed="true">Todas</button><button data-k="media" aria-pressed="false">Media y alta</button><button data-k="alta" aria-pressed="false">Solo alta</button></span>
+      </div>
+      <div class="card">
+        <div class="card-h"><h2 id="cal-title"></h2><span class="meta" id="cal-meta"></span></div>
+        <div class="card-b flush tbl-wrap"><table id="t-cal"></table></div>
+      </div>
+      <p class="note" id="cal-src"></p>
+    </section>
+
+    <!-- RENTA FIJA -->
+    <section class="view" id="v-rf">
+      <div class="grid g-12">
+        <div class="card span-12">
+          <div class="card-h"><h2>Corporativos EUR elegibles vs curvas soberanas</h2><span class="meta">TIR % por años a vencimiento</span></div>
+          <div class="card-b">
+            <div class="legend" id="lg-rf"></div>
+            <div class="chart lg"><canvas id="c-rf" aria-label="TIR corporativos vs curva"></canvas></div>
+          </div>
+        </div>
+        <div class="card span-12">
+          <div class="card-h"><h2>Renta fija corporativa</h2><span class="meta" id="rf-meta"></span>
+            <span class="right">
+              <span class="seg" id="seg-rf-div"><button data-k="EUR" aria-pressed="true">EUR</button><button data-k="USD" aria-pressed="false">USD</button></span>
+              <span class="seg" id="seg-rf-buck"><button data-k="all" aria-pressed="true">Todo</button><button data-k="a" aria-pressed="false">&lt; 2A</button><button data-k="b" aria-pressed="false">2–4A</button><button data-k="c" aria-pressed="false">4–7A</button></span>
+            </span>
+          </div>
+          <div class="card-b flush tbl-wrap"><table id="t-corp"></table></div>
+          <p class="note" style="padding:0 16px 14px">Spread vs Bund interpolado linealmente sobre la curva alemana del 16/10. Precios indicativos, no vinculantes. Criterios: rating ≥ BBB+/Baa1, senior unsecured, plazo ≤ 10A, no complejo, nominal mín. 100.000.</p>
+        </div>
+        <div class="card span-12">
+          <div class="card-h"><h2>Deuda pública</h2><span class="meta">cotizaciones 16/10</span>
+            <span class="right"><span class="seg" id="seg-gov"></span></span>
+          </div>
+          <div class="card-b flush tbl-wrap"><table id="t-gov"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">Uso interno. Datos de los boletines del Departamento de Tesorería; precios y cotizaciones indicativos, no constituyen recomendación de inversión.</div>
+  </main>
+
+  <script src="assets/vendor/chart.umd.min.js"></script>
+  <script src="data/boletin.js"></script>
+  <script src="data/calendario.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

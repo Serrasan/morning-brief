@@ -1,0 +1,18 @@
+{
+  "_comentario": "Criterios del calendario. 'paises' vacío = todos. 'excluir' = textos de dato a ocultar. 'importancia' admite 'texto' o 'PAIS|texto' (códigos: ES IT DE FR EZ US CN JP UK).",
+  "paises": [],
+  "excluir": [],
+  "importancia": {
+    "alta": [
+      "IPC", "PIB", "Nóminas", "PCE", "Tasa de desempleo",
+      "US|PMI", "EZ|PMI", "DE|PMI",
+      "ZEW Expectativas", "Expectativas IFO", "ISM",
+      "Ventas minoristas MoM", "PPI MoM"
+    ],
+    "media": [
+      "PMI", "PPI", "Desempleo", "Ventas minoristas", "Peticiones ini", "Confianza", "Confi.", "Producción industrial",
+      "Balanza comercial", "Construcciones", "Permisos", "ZEW", "IFO",
+      "Expect.Inf", "Ventas pendientes", "Índice líder", "Libro Beige"
+    ]
+  }
+}

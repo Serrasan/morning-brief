@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.xlsx
+*.pdf
+
+# Datos internos: descomenta si el repo no es privado
+# data/boletin.js
+# data/calendario.js
+# data/calendario_actuales.json
