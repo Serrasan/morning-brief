@@ -615,5 +615,6 @@ window.CALENDARIO = {
     }
    ]
   }
- ]
+ ],
+ "actualizado": "2026-10-21 10:19"
 };

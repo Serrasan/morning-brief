@@ -45,10 +45,14 @@ scripts/
 3. **Datos publicados**: añade a `data/calendario_actuales.json` la clave `fecha|país|dato` → valor. Ejemplo:
    `{"2026-10-21|UK|IPC YoY": "3,30%"}`. La app calcula la sorpresa contra el consenso.
 
-## Confidencialidad
+## Web (GitHub Pages)
 
-Los boletines están marcados como **confidenciales y de uso exclusivo interno**. Antes de subir el repo:
+https://serrasan.github.io/morning-brief/ — se publica desde la rama `main` (Settings → Pages → Deploy from a branch → `main` / `root`).
 
-- El repo debe ser **privado**.
-- **No publiques GitHub Pages** con datos reales: una web de Pages es pública aunque el repo sea privado (salvo GitHub Enterprise con acceso restringido).
-- Si quieres el código en un repo público, descomenta las líneas de `data/` en `.gitignore` y guarda los datos solo en local.
+## Actualización automática
+
+Una tarea programada de Claude se ejecuta los días laborables a las 08:41 y a las 17:41 (hora de Madrid):
+busca los datos publicados del calendario de la semana, los añade a `data/calendario_actuales.json`,
+ejecuta `python scripts/aplicar_actuales.py` y hace push. Pages se redespliega solo.
+
+Lo que sigue siendo manual (semanal): el Excel del calendario de la semana nueva y los boletines PDF.

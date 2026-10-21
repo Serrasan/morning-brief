@@ -301,7 +301,7 @@
           <td class="strong">${e.dato}${dia.fecha === TODAY && i === nextIdx ? `<span class="pill">Siguiente</span>` : ""}</td>
           <td class="dim">${e.periodo}</td><td class="n">${e.est || `<span class="dim">—</span>`}</td><td class="n dim">${e.ultimo || "—"}</td><td class="n">${act}</td></tr>`;
       }).join("")}</tbody>` : `<tbody><tr><td class="empty">Sin publicaciones con estos filtros.</td></tr></tbody>`;
-    $("#cal-src").textContent = `Fuente: ${CAL.hoja ? `hoja «${CAL.hoja}» del calendario semanal` : "calendario semanal"} · generado ${CAL.generado || "—"}`;
+    $("#cal-src").textContent = `Fuente: ${CAL.hoja ? `hoja «${CAL.hoja}» del calendario semanal` : "calendario semanal"} · generado ${CAL.generado || "—"}${CAL.actualizado ? ` · datos publicados actualizados ${CAL.actualizado}` : ""}`;
   }
   seg("#cal-imp", k => { calState.imp = k; renderCalendario(); });
 
