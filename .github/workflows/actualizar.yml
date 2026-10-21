@@ -1,0 +1,70 @@
+name: Actualizar Morning Brief
+
+# Dos veces al día, de lunes a viernes (hora UTC).
+# 07:15 y 16:15 UTC = 09:15 y 18:15 en Madrid en horario de verano, 08:15 y 17:15 en invierno.
+on:
+  schedule:
+    - cron: "15 7 * * 1-5"
+    - cron: "15 16 * * 1-5"
+  workflow_dispatch: {}   # botón "Run workflow" para lanzarlo a mano
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: actualizar-morning-brief
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      HAS_CLAUDE: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Mercados (Yahoo Finance)
+        run: |
+          pip install --quiet yfinance
+          python scripts/actualizar_mercados.py
+
+      # Datos macro publicados del calendario (opcional: requiere el secreto ANTHROPIC_API_KEY)
+      - name: Datos publicados del calendario (Claude)
+        if: env.HAS_CLAUDE == 'true'
+        continue-on-error: true
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: |
+            --allowedTools "Read,Edit,Write,WebSearch,WebFetch,Bash(python scripts/aplicar_actuales.py)"
+          prompt: |
+            Eres el actualizador del dashboard Morning Brief. Responde y escribe en español.
+            1. Lee data/calendario.js (window.CALENDARIO): eventos de la semana con id "fecha|país|dato",
+               hora (Madrid), pais (ES IT DE FR EZ US CN JP UK), dato, periodo, est, ultimo y actual.
+            2. Para cada evento cuya fecha y hora ya hayan pasado en Madrid y que no tenga "actual",
+               busca en la web el dato publicado (fuente oficial o prensa financiera fiable; comprueba
+               que es el periodo correcto). Si el evento no tiene "est" y encuentras el consenso, añádelo.
+            3. Guarda los datos en data/calendario_actuales.json con la clave exacta del id.
+               Formato: "valor" o {"actual": "valor", "est": "consenso"}, con el mismo formato que
+               "ultimo" (coma decimal y mismo sufijo: "3,50%", "1.221m", "-¥536,6bn").
+               No inventes nada: si no encuentras un dato fiable, déjalo sin rellenar.
+            4. Ejecuta: python scripts/aplicar_actuales.py
+            5. No hagas commit ni push: el workflow lo hace después.
+
+      - name: Commit y push
+        run: |
+          git config user.name "morning-brief-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Sin cambios"
+          else
+            git commit -m "Actualización automática $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git push
+          fi

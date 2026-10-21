@@ -3,6 +3,17 @@
   "use strict";
   const B = window.BRIEF;
   const CAL = window.CALENDARIO || { dias: [] };
+  // Mercados en vivo (GitHub Actions + Yahoo Finance): sustituyen a los del boletín si existen
+  const M = window.MERCADOS;
+  let LIVE = null;
+  if (M) {
+    const pc = (x, r) => (r ? (x / r - 1) * 100 : null);
+    [["bolsas", B.bolsas], ["divisas", B.divisas], ["materias", B.materias], ["vol", B.vol]].forEach(([g, arr]) =>
+      arr.forEach(r => { const m = M[g] && M[g][r.n]; if (m && m.v != null) r.v = [m.v, pc(m.v, m.sem), pc(m.v, m.mes), pc(m.v, m.anio)]; }));
+    const u = M.tipos && M.tipos["UST 10A"];
+    if (u && u.v != null) B.ust_live = { v: u.v, d1w: u.sem != null ? (u.v - u.sem) * 100 : null };
+    LIVE = new Date(M.actualizado);
+  }
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
@@ -59,7 +70,10 @@
 
   /* ---------------- Cabecera ---------------- */
   { const t = fmtLong(NOW); $("#hoy-txt").textContent = t.charAt(0).toUpperCase() + t.slice(1); }
-  $("#fuente-txt").textContent = `Boletines ${fmtShort(B.meta.boletin)} · cierre de mercado ${fmtShort(B.meta.cierre)}`;
+  $("#fuente-txt").textContent = `Boletines ${fmtShort(B.meta.boletin)}` + (LIVE && !isNaN(LIVE)
+    ? ` · mercados ${LIVE.toLocaleString("es-ES", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}`
+    : ` · cierre de mercado ${fmtShort(B.meta.cierre)}`);
+  { const el = document.getElementById("idx-meta"); if (el && LIVE && !isNaN(LIVE)) el.textContent = `en vivo · ${LIVE.toLocaleString("es-ES", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}`; }
 
   /* ---------------- Navegación ---------------- */
   const VIEWS = ["resumen", "tipos", "mercados", "macro", "calendario", "rf"];
@@ -96,7 +110,7 @@
       { l: "Euribor 12M", v: pct(eur12.actual), d: chg(pb(eur12.actual, eur12.sem), { d: 0, suf: " pb" }) },
       { l: "Bund 10A", v: pct(sob.DE[0]), d: chg(sob.DE[1], { d: 1, suf: " pb" }) },
       { l: "Bono 10A", v: pct(sob.ES[0]), d: chg(sob.ES[1], { d: 1, suf: " pb" }) },
-      { l: "UST 10A", v: pct(sob.US[0]), d: chg(sob.US[1], { d: 1, suf: " pb" }) },
+      B.ust_live ? { l: "UST 10A", v: pct(B.ust_live.v), d: chg(B.ust_live.d1w, { d: 1, suf: " pb" }) } : { l: "UST 10A", v: pct(sob.US[0]), d: chg(sob.US[1], { d: 1, suf: " pb" }) },
       { l: "Prima España 10A", u: "pb", v: nf(sprES[0], 1), d: chg(sprES[0] - sprES[1], { d: 1, suf: " pb", kind: "inv" }) },
       { l: "EUR/USD", v: nf(eurusd[0], 3), d: chg(eurusd[1], { suf: "%", kind: "price" }) },
       { l: "Brent", u: "$", v: nf(brent[0], 2), d: chg(brent[1], { suf: "%", kind: "price" }) },

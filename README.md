@@ -49,10 +49,15 @@ scripts/
 
 https://serrasan.github.io/morning-brief/ — se publica desde la rama `main` (Settings → Pages → Deploy from a branch → `main` / `root`).
 
-## Actualización automática
+## Actualización automática (GitHub Actions)
 
-Una tarea programada de Claude se ejecuta los días laborables a las 08:41 y a las 17:41 (hora de Madrid):
-busca los datos publicados del calendario de la semana, los añade a `data/calendario_actuales.json`,
-ejecuta `python scripts/aplicar_actuales.py` y hace push. Pages se redespliega solo.
+El workflow `.github/workflows/actualizar.yml` se ejecuta de lunes a viernes a las 07:15 y 16:15 UTC
+(09:15 y 18:15 en Madrid en verano; 08:15 y 17:15 en invierno). También se puede lanzar a mano desde Actions → Run workflow.
+
+1. **Mercados**: `scripts/actualizar_mercados.py` descarga de Yahoo Finance bolsas, divisas, materias primas, VIX y UST 10A
+   → `data/mercados.js`. La app usa estos valores en lugar de los del boletín.
+2. **Datos publicados del calendario** (opcional): si el repo tiene el secreto `ANTHROPIC_API_KEY`
+   (Settings → Secrets and variables → Actions), Claude busca los datos ya publicados y los vuelca con `scripts/aplicar_actuales.py`.
+3. Commit y push automáticos → GitHub Pages se redespliega solo.
 
 Lo que sigue siendo manual (semanal): el Excel del calendario de la semana nueva y los boletines PDF.
