@@ -7,14 +7,14 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231c5cab'/%3E%3Cpath d='M7 22l6-7 5 4 7-9' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand-row">
+  <header class="masthead">
+    <div class="mh-inner">
+      <div class="mh-top">
         <div class="brand">
           <h1>Morning Brief</h1>
           <span class="sub">Tesorería y Mercados de Capitales</span>
@@ -27,29 +27,31 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         </button>
       </div>
-      <nav class="tabs" role="tablist">
-        <button class="tab" role="tab" data-view="resumen">Resumen</button>
-        <button class="tab" role="tab" data-view="tipos">Tipos y curvas</button>
-        <button class="tab" role="tab" data-view="mercados">Mercados</button>
-        <button class="tab" role="tab" data-view="macro">Macro</button>
-        <button class="tab" role="tab" data-view="calendario">Calendario</button>
-        <button class="tab" role="tab" data-view="rf">Renta fija</button>
-      </nav>
+      <div class="tape" id="kpis" aria-label="Niveles de mercado"></div>
     </div>
   </header>
+  <div class="navbar">
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-view="resumen">Resumen</button>
+      <button class="tab" role="tab" data-view="tipos">Tipos y curvas</button>
+      <button class="tab" role="tab" data-view="mercados">Mercados</button>
+      <button class="tab" role="tab" data-view="macro">Macro</button>
+      <button class="tab" role="tab" data-view="calendario">Calendario</button>
+      <button class="tab" role="tab" data-view="rf">Renta fija</button>
+    </nav>
+  </div>
 
   <main>
     <!-- RESUMEN -->
     <section class="view" id="v-resumen">
-      <div class="kpis" id="kpis"></div>
-      <div class="grid g-12" style="margin-top:16px">
-        <div class="card span-7">
+      <div class="grid g-12">
+        <div class="card span-7 note-card">
           <div class="card-h"><h2>Claves de la semana</h2><span class="meta" id="claves-meta"></span></div>
           <div class="card-b"><ul class="claves" id="claves"></ul></div>
         </div>
         <div class="stack span-5">
           <div class="card">
-            <div class="card-h"><h2 id="hoy-cal-title">Hoy en el calendario</h2><span class="right"><a href="#calendario" class="meta" style="color:var(--accent);text-decoration:none">Semana completa →</a></span></div>
+            <div class="card-h"><h2 id="hoy-cal-title">Hoy en el calendario</h2><span class="right"><a href="#calendario" class="meta" >Ver semana</a></span></div>
             <ul class="today-list" id="hoy-cal"></ul>
           </div>
           <div class="card">
@@ -78,8 +80,8 @@
           <div class="card-b">
             <div class="legend"><span><span class="swatch" style="background:var(--s1)"></span>Cierre 16/10</span><span><span class="swatch" style="background:var(--muted-mark)"></span>Semana anterior</span></div>
             <div class="grid g-2">
-              <div><div class="meta dim" style="font-size:12px;margin-bottom:4px">BCE</div><div class="chart sm"><canvas id="c-prob-bce"></canvas></div></div>
-              <div><div class="meta dim" style="font-size:12px;margin-bottom:4px">Fed</div><div class="chart sm"><canvas id="c-prob-fed"></canvas></div></div>
+              <div><div class="chart-sub">BCE</div><div class="chart sm"><canvas id="c-prob-bce"></canvas></div></div>
+              <div><div class="chart-sub">Fed</div><div class="chart sm"><canvas id="c-prob-fed"></canvas></div></div>
             </div>
           </div>
         </div>
@@ -155,7 +157,7 @@
     <section class="view" id="v-macro">
       <div class="grid g-12">
         <div class="card span-12">
-          <div class="card-h"><h2>Publicaciones de esta semana</h2><span class="meta" id="pub-meta"></span><span class="right"><a href="#calendario" class="meta" style="color:var(--accent);text-decoration:none">Calendario →</a></span></div>
+          <div class="card-h"><h2>Publicaciones de esta semana</h2><span class="meta" id="pub-meta"></span><span class="right"><a href="#calendario" class="meta" >Ver calendario</a></span></div>
           <div class="card-b flush tbl-wrap"><table id="t-publicados"></table></div>
           <p class="note" style="padding:0 16px 14px">Consenso del calendario semanal; * consenso de mercado cuando el calendario no lo recoge. Sorpresa = dato − consenso.</p>
         </div>

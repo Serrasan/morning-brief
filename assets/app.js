@@ -105,22 +105,22 @@
     const sprES = B.spreads["10A"].ES;
     const bceDic = B.probs.BCE.find(x => x.r === "Dic-26"), fedDic = B.probs.Fed.find(x => x.r === "Dic-26");
     const k = [
-      { l: "Depósito BCE", v: pct(2.5), d: `<span class="chg neutral">Dic: ${nf(bceDic.act, 1)}% subida</span>` },
-      { l: "Fed Funds", v: "3,75–4,00%", d: `<span class="chg neutral">Dic: ${nf(fedDic.act, 1)}% subida</span>` },
+      { l: "Depósito BCE", v: pct(2.5), d: `<span class="chg neutral">Subida dic.: ${nf(bceDic.act, 1)}%</span>` },
+      { l: "Fed Funds", v: "3,75–4,00%", d: `<span class="chg neutral">Subida dic.: ${nf(fedDic.act, 1)}%</span>` },
       { l: "Euribor 12M", v: pct(eur12.actual), d: chg(pb(eur12.actual, eur12.sem), { d: 0, suf: " pb" }) },
       { l: "Bund 10A", v: pct(sob.DE[0]), d: chg(sob.DE[1], { d: 1, suf: " pb" }) },
       { l: "Bono 10A", v: pct(sob.ES[0]), d: chg(sob.ES[1], { d: 1, suf: " pb" }) },
       B.ust_live ? { l: "UST 10A", v: pct(B.ust_live.v), d: chg(B.ust_live.d1w, { d: 1, suf: " pb" }) } : { l: "UST 10A", v: pct(sob.US[0]), d: chg(sob.US[1], { d: 1, suf: " pb" }) },
-      { l: "Prima España 10A", u: "pb", v: nf(sprES[0], 1), d: chg(sprES[0] - sprES[1], { d: 1, suf: " pb", kind: "inv" }) },
+      { l: "Prima ES 10A", v: nf(sprES[0], 1) + " pb", d: chg(sprES[0] - sprES[1], { d: 1, suf: " pb", kind: "inv" }) },
       { l: "EUR/USD", v: nf(eurusd[0], 3), d: chg(eurusd[1], { suf: "%", kind: "price" }) },
-      { l: "Brent", u: "$", v: nf(brent[0], 2), d: chg(brent[1], { suf: "%", kind: "price" }) },
+      { l: "Brent $", v: nf(brent[0], 2), d: chg(brent[1], { suf: "%", kind: "price" }) },
       { l: "VIX", v: nf(vix[0], 2), d: chg(vix[1], { suf: "%", kind: "inv" }) },
     ];
     $("#kpis").innerHTML = k.map(x => `
-      <div class="card kpi">
-        <div class="kpi-l"><span>${x.l}</span>${x.u ? `<span class="u">${x.u}</span>` : `<span class="u">1 sem</span>`}</div>
-        <div class="kpi-val">${x.v}</div>
-        <div class="kpi-d">${x.d}</div>
+      <div class="tape-cell">
+        <div class="tape-l">${x.l}${x.u ? ` (${x.u})` : ""}</div>
+        <div class="tape-v">${x.v}</div>
+        <div class="tape-d">${x.d}</div>
       </div>`).join("");
   }
 
@@ -389,7 +389,7 @@
 
   function baseOpts() {
     const t2 = css("--text-2"), t3 = css("--text-3"), grid = css("--grid"), surf = css("--surface"), bord = css("--border-strong"), t1 = css("--text");
-    Chart.defaults.font.family = css("--sans") || "IBM Plex Sans";
+    Chart.defaults.font.family = css("--sans") || "Inter";
     Chart.defaults.font.size = 11.5;
     Chart.defaults.color = t3;
     return {
@@ -399,7 +399,7 @@
         tooltip: {
           backgroundColor: surf, borderColor: bord, borderWidth: 1, titleColor: t1, bodyColor: t2,
           padding: 10, cornerRadius: 8, boxPadding: 4, usePointStyle: true,
-          titleFont: { weight: "600" }, bodyFont: { family: css("--mono") },
+          titleFont: { weight: "600" }, bodyFont: { family: css("--sans") },
         },
       },
       scales: {
