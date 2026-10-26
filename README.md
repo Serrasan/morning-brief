@@ -60,4 +60,12 @@ El workflow `.github/workflows/actualizar.yml` se ejecuta de lunes a viernes a l
    (Settings → Secrets and variables → Actions), Claude busca los datos ya publicados y los vuelca con `scripts/aplicar_actuales.py`.
 3. Commit y push automáticos → GitHub Pages se redespliega solo.
 
-Lo que sigue siendo manual (semanal): el Excel del calendario de la semana nueva y los boletines PDF.
+## Resumen diario (tarea programada de Claude)
+
+De lunes a viernes por la mañana, una tarea programada de Claude:
+- reescribe `data/resumen.js` (titular + claves del día) a partir de prensa y de los datos del repo;
+- rellena los datos publicados del día anterior en `data/calendario_actuales.json`;
+- si no hay Excel de la semana, construye el calendario en `data/calendario_semana.json` y ejecuta `python scripts/calendario_desde_json.py`;
+- hace commit y push a `main`.
+
+Lo que sigue siendo manual (semanal): los boletines PDF. Si se aporta el Excel del calendario, tiene prioridad sobre el calendario de prensa.

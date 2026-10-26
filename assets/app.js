@@ -51,7 +51,7 @@
   };
   const pb = (a, b) => (a - b) * 100;
   const cc = p => `<span class="cc">${p}</span>`;
-  const NOMBRE = { ES: "España", IT: "Italia", DE: "Alemania", FR: "Francia", EZ: "Eurozona", US: "EE.UU.", UK: "Reino Unido", CN: "China", JP: "Japón" };
+  const NOMBRE = { CA: "Canadá", ES: "España", IT: "Italia", DE: "Alemania", FR: "Francia", EZ: "Eurozona", US: "EE.UU.", UK: "Reino Unido", CN: "China", JP: "Japón" };
 
   /* ---------------- Tema y colores ---------------- */
   const root = document.documentElement;
@@ -125,6 +125,15 @@
   }
 
   function renderClaves() {
+    const R = window.RESUMEN;
+    if (R && R.claves && R.claves.length) {
+      $("#claves-title").textContent = R.fecha === TODAY ? "Claves del día" : "Claves";
+      $("#claves-meta").textContent = parseISO(R.fecha).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
+      $("#claves-lead").textContent = R.titular || "";
+      $("#claves-lead").hidden = !R.titular;
+      $("#claves").innerHTML = R.claves.map(c => `<li><span class="tag">${c.tag}</span><span class="txt">${c.txt}</span></li>`).join("");
+      return;
+    }
     $("#claves-meta").textContent = `Boletín ${fmtShort(B.meta.boletin)}`;
     $("#claves").innerHTML = B.claves.map(c => `<li><span class="tag">${c.tag}</span><span class="txt">${c.txt}</span></li>`).join("");
   }
@@ -315,7 +324,7 @@
           <td class="strong">${e.dato}${dia.fecha === TODAY && i === nextIdx ? `<span class="pill">Siguiente</span>` : ""}</td>
           <td class="dim">${e.periodo}</td><td class="n">${e.est || `<span class="dim">—</span>`}</td><td class="n dim">${e.ultimo || "—"}</td><td class="n">${act}</td></tr>`;
       }).join("")}</tbody>` : `<tbody><tr><td class="empty">Sin publicaciones con estos filtros.</td></tr></tbody>`;
-    $("#cal-src").textContent = `Fuente: ${CAL.hoja ? `hoja «${CAL.hoja}» del calendario semanal` : "calendario semanal"} · generado ${CAL.generado || "—"}${CAL.actualizado ? ` · datos publicados actualizados ${CAL.actualizado}` : ""}`;
+    $("#cal-src").textContent = `Fuente: ${CAL.hoja ? `hoja «${CAL.hoja}» del calendario semanal` : (CAL.fuente || "calendario semanal")} · generado ${CAL.generado || "—"}${CAL.actualizado ? ` · datos publicados actualizados ${CAL.actualizado}` : ""}`;
   }
   seg("#cal-imp", k => { calState.imp = k; renderCalendario(); });
 

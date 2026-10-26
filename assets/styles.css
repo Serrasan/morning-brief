@@ -174,6 +174,7 @@ main { max-width: 1320px; margin: 0 auto; padding: 28px 28px 64px; }
 .card.note-card .card-h { padding: 22px 26px 6px; }
 .card.note-card .card-h h2 { font: 500 22px/1.2 var(--serif); }
 .card.note-card .card-b { padding: 6px 26px 24px; }
+.lead { font: 400 19px/1.5 var(--serif); color: var(--text); margin: 4px 0 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border-strong); max-width: 70ch; }
 .claves { list-style: none; margin: 0; padding: 0; }
 .claves li { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 14px 0; border-top: 1px solid var(--border); }
 .claves li:first-child { border-top: 0; }

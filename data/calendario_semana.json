@@ -1,0 +1,53 @@
+{
+  "semana": "2026-10-26",
+  "fuente": "Calendario elaborado a partir de prensa (Trading Economics, Saxo, Forex Trading Community); horas CET",
+  "dias": {
+    "2026-10-26": [
+      {"hora": "10:00", "pais": "DE", "dato": "Ifo Clima empresarial", "periodo": "Oct", "est": "89,8", "ultimo": "89,9", "imp": "alta"},
+      {"hora": "15:30", "pais": "US", "dato": "Fed Dallas manufacturas", "periodo": "Oct", "est": "", "ultimo": "9,8", "imp": "baja"}
+    ],
+    "2026-10-27": [
+      {"hora": "08:45", "pais": "FR", "dato": "Confianza Consumidor", "periodo": "Oct", "est": "", "ultimo": "86", "imp": "media"},
+      {"hora": "09:00", "pais": "ES", "dato": "Tasa de desempleo (EPA)", "periodo": "3T", "est": "", "ultimo": "9,87%", "imp": "alta"},
+      {"hora": "13:30", "pais": "US", "dato": "Pedidos bienes duraderos MoM", "periodo": "Sept", "est": "0,60%", "ultimo": "0,00%", "imp": "media"},
+      {"hora": "14:00", "pais": "US", "dato": "Case-Shiller YoY", "periodo": "Ago", "est": "2,60%", "ultimo": "2,50%", "imp": "baja"},
+      {"hora": "15:00", "pais": "US", "dato": "Confianza cons. Conf. Board", "periodo": "Oct", "est": "80,5", "ultimo": "81,9", "imp": "media"},
+      {"hora": "15:00", "pais": "US", "dato": "Ventas viviendas nuevas", "periodo": "Sept", "est": "0,660m", "ultimo": "0,684m", "imp": "baja"},
+      {"hora": "17:00", "pais": "EZ", "dato": "Discurso de Lagarde", "periodo": "", "est": "", "ultimo": "", "imp": "media"}
+    ],
+    "2026-10-28": [
+      {"hora": "08:00", "pais": "DE", "dato": "Confianza consumidor GFK", "periodo": "Nov", "est": "-30,0", "ultimo": "-30,6", "imp": "media"},
+      {"hora": "13:30", "pais": "US", "dato": "Balanza comercial bienes (bn)", "periodo": "Sept", "est": "-$128,7bn", "ultimo": "-$132,1bn", "imp": "baja"},
+      {"hora": "14:45", "pais": "CA", "dato": "Decisión Banco de Canadá", "periodo": "", "est": "2,50%", "ultimo": "2,25%", "imp": "media"},
+      {"hora": "19:00", "pais": "US", "dato": "Decisión Fed (techo)", "periodo": "", "est": "4,00%", "ultimo": "4,00%", "imp": "alta"},
+      {"hora": "19:30", "pais": "US", "dato": "Rueda de prensa de la Fed", "periodo": "", "est": "", "ultimo": "", "imp": "alta"}
+    ],
+    "2026-10-29": [
+      {"hora": "11:00", "pais": "EZ", "dato": "Confianza económica", "periodo": "Oct", "est": "", "ultimo": "97,9", "imp": "media"},
+      {"hora": "11:00", "pais": "EZ", "dato": "Desempleo", "periodo": "Sept", "est": "", "ultimo": "6,40%", "imp": "media"},
+      {"hora": "11:00", "pais": "IT", "dato": "Confianza Consumidor", "periodo": "Oct", "est": "", "ultimo": "91,2", "imp": "baja"},
+      {"hora": "13:30", "pais": "US", "dato": "PIB QoQ anualizado (avance)", "periodo": "3T", "est": "3,20%", "ultimo": "2,20%", "imp": "alta"},
+      {"hora": "13:30", "pais": "US", "dato": "PCE YoY", "periodo": "Sept", "est": "", "ultimo": "3,40%", "imp": "alta"},
+      {"hora": "13:30", "pais": "US", "dato": "PCE Suby. MoM", "periodo": "Sept", "est": "0,30%", "ultimo": "0,20%", "imp": "alta"},
+      {"hora": "13:30", "pais": "US", "dato": "Gasto personal MoM", "periodo": "Sept", "est": "0,30%", "ultimo": "0,90%", "imp": "media"},
+      {"hora": "13:30", "pais": "US", "dato": "Peticiones ini.desemp. (m)", "periodo": "24/10", "est": "196", "ultimo": "194", "imp": "media"},
+      {"hora": "14:15", "pais": "EZ", "dato": "Decisión BCE (depósito)", "periodo": "", "est": "2,50%", "ultimo": "2,50%", "imp": "alta"},
+      {"hora": "14:45", "pais": "EZ", "dato": "Rueda de prensa del BCE", "periodo": "", "est": "", "ultimo": "", "imp": "alta"}
+    ],
+    "2026-10-30": [
+      {"hora": "", "pais": "JP", "dato": "Decisión BoJ", "periodo": "", "est": "1,25%", "ultimo": "1,25%", "imp": "alta"},
+      {"hora": "07:30", "pais": "FR", "dato": "PIB QoQ (prel.)", "periodo": "3T", "est": "0,10%", "ultimo": "0,00%", "imp": "alta"},
+      {"hora": "08:45", "pais": "FR", "dato": "IPC YoY (prel.)", "periodo": "Oct", "est": "3,20%", "ultimo": "3,10%", "imp": "alta"},
+      {"hora": "09:00", "pais": "ES", "dato": "PIB QoQ (flash)", "periodo": "3T", "est": "0,60%", "ultimo": "0,70%", "imp": "alta"},
+      {"hora": "09:00", "pais": "ES", "dato": "IPC YoY (prel.)", "periodo": "Oct", "est": "4,90%", "ultimo": "4,90%", "imp": "alta"},
+      {"hora": "09:55", "pais": "DE", "dato": "Cambio en desempleo (m)", "periodo": "Oct", "est": "5k", "ultimo": "12k", "imp": "media"},
+      {"hora": "10:00", "pais": "DE", "dato": "PIB QoQ (flash)", "periodo": "3T", "est": "0,10%", "ultimo": "0,30%", "imp": "alta"},
+      {"hora": "11:00", "pais": "EZ", "dato": "PIB QoQ (flash)", "periodo": "3T", "est": "0,20%", "ultimo": "0,60%", "imp": "alta"},
+      {"hora": "11:00", "pais": "IT", "dato": "PIB QoQ (avance)", "periodo": "3T", "est": "0,10%", "ultimo": "0,20%", "imp": "alta"},
+      {"hora": "11:00", "pais": "IT", "dato": "IPC YoY (prel.)", "periodo": "Oct", "est": "", "ultimo": "4,20%", "imp": "alta"},
+      {"hora": "13:30", "pais": "US", "dato": "Índice coste empleo (ECI) QoQ", "periodo": "3T", "est": "0,80%", "ultimo": "0,90%", "imp": "media"},
+      {"hora": "14:00", "pais": "DE", "dato": "IPC YoY (prel.)", "periodo": "Oct", "est": "", "ultimo": "3,30%", "imp": "alta"},
+      {"hora": "14:45", "pais": "US", "dato": "PMI Chicago", "periodo": "Oct", "est": "56,0", "ultimo": "55,9", "imp": "media"}
+    ]
+  }
+}
