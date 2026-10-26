@@ -9,9 +9,9 @@
   if (M) {
     const pc = (x, r) => (r ? (x / r - 1) * 100 : null);
     [["bolsas", B.bolsas], ["divisas", B.divisas], ["materias", B.materias], ["vol", B.vol]].forEach(([g, arr]) =>
-      arr.forEach(r => { const m = M[g] && M[g][r.n]; if (m && m.v != null) r.v = [m.v, pc(m.v, m.sem), pc(m.v, m.mes), pc(m.v, m.anio)]; }));
+      arr.forEach(r => { const m = M[g] && M[g][r.n]; if (m && m.v != null) r.v = [m.v, pc(m.v, m.sem), pc(m.v, m.mes), pc(m.v, m.anio), m.dia != null ? pc(m.v, m.dia) : null]; }));
     const u = M.tipos && M.tipos["UST 10A"];
-    if (u && u.v != null) B.ust_live = { v: u.v, d1w: u.sem != null ? (u.v - u.sem) * 100 : null };
+    if (u && u.v != null) B.ust_live = { v: u.v, d1w: u.sem != null ? (u.v - u.sem) * 100 : null, d1d: u.dia != null ? (u.v - u.dia) * 100 : null };
     LIVE = new Date(M.actualizado);
   }
   const $ = (s, el = document) => el.querySelector(s);
@@ -50,6 +50,9 @@
     return `<span class="chg ${cls}"><span style="font-size:.75em">${arrow}</span> ${sign(r, d)}${suf}</span>`;
   };
   const pb = (a, b) => (a - b) * 100;
+  const per = t => `<span class="per">${t}</span>`;
+  // Variación diaria si existe (índice 4), si no la semanal (índice 1)
+  const dOrW = (v, opts) => v[4] != null ? chg(v[4], opts) + per("1d") : chg(v[1], opts) + per("1s");
   const cc = p => `<span class="cc">${p}</span>`;
   const NOMBRE = { CA: "Canadá", ES: "España", IT: "Italia", DE: "Alemania", FR: "Francia", EZ: "Eurozona", US: "EE.UU.", UK: "Reino Unido", CN: "China", JP: "Japón" };
 
@@ -107,14 +110,14 @@
     const k = [
       { l: "Depósito BCE", v: pct(2.5), d: `<span class="chg neutral">Subida dic.: ${nf(bceDic.act, 1)}%</span>` },
       { l: "Fed Funds", v: "3,75–4,00%", d: `<span class="chg neutral">Subida dic.: ${nf(fedDic.act, 1)}%</span>` },
-      { l: "Euribor 12M", v: pct(eur12.actual), d: chg(pb(eur12.actual, eur12.sem), { d: 0, suf: " pb" }) },
-      { l: "Bund 10A", v: pct(sob.DE[0]), d: chg(sob.DE[1], { d: 1, suf: " pb" }) },
-      { l: "Bono 10A", v: pct(sob.ES[0]), d: chg(sob.ES[1], { d: 1, suf: " pb" }) },
-      B.ust_live ? { l: "UST 10A", v: pct(B.ust_live.v), d: chg(B.ust_live.d1w, { d: 1, suf: " pb" }) } : { l: "UST 10A", v: pct(sob.US[0]), d: chg(sob.US[1], { d: 1, suf: " pb" }) },
-      { l: "Prima ES 10A", v: nf(sprES[0], 1) + " pb", d: chg(sprES[0] - sprES[1], { d: 1, suf: " pb", kind: "inv" }) },
-      { l: "EUR/USD", v: nf(eurusd[0], 3), d: chg(eurusd[1], { suf: "%", kind: "price" }) },
-      { l: "Brent $", v: nf(brent[0], 2), d: chg(brent[1], { suf: "%", kind: "price" }) },
-      { l: "VIX", v: nf(vix[0], 2), d: chg(vix[1], { suf: "%", kind: "inv" }) },
+      { l: "Euribor 12M", v: pct(eur12.actual), d: chg(pb(eur12.actual, eur12.sem), { d: 0, suf: " pb" }) + per("1s") },
+      { l: "Bund 10A", v: pct(sob.DE[0]), d: chg(sob.DE[1], { d: 1, suf: " pb" }) + per("1s") },
+      { l: "Bono 10A", v: pct(sob.ES[0]), d: chg(sob.ES[1], { d: 1, suf: " pb" }) + per("1s") },
+      B.ust_live ? { l: "UST 10A", v: pct(B.ust_live.v), d: B.ust_live.d1d != null ? chg(B.ust_live.d1d, { d: 1, suf: " pb" }) + per("1d") : chg(B.ust_live.d1w, { d: 1, suf: " pb" }) + per("1s") } : { l: "UST 10A", v: pct(sob.US[0]), d: chg(sob.US[1], { d: 1, suf: " pb" }) + per("1s") },
+      { l: "Prima ES 10A", v: nf(sprES[0], 1) + " pb", d: chg(sprES[0] - sprES[1], { d: 1, suf: " pb", kind: "inv" }) + per("1s") },
+      { l: "EUR/USD", v: nf(eurusd[0], 3), d: dOrW(eurusd, { suf: "%", kind: "price" }) },
+      { l: "Brent $", v: nf(brent[0], 2), d: dOrW(brent, { suf: "%", kind: "price" }) },
+      { l: "VIX", v: nf(vix[0], 2), d: dOrW(vix, { suf: "%", kind: "inv" }) },
     ];
     $("#kpis").innerHTML = k.map(x => `
       <div class="tape-cell">
@@ -194,9 +197,9 @@
   /* ================================================================ MERCADOS */
   function renderMercados() {
     $("#t-bolsas").innerHTML = `
-      <thead><tr><th>Índice</th><th class="n">Último</th><th class="n">1 sem</th><th class="n">1 mes</th><th class="n">1 año</th></tr></thead>
+      <thead><tr><th>Índice</th><th class="n">Último</th><th class="n">1 día</th><th class="n">1 sem</th><th class="n">1 mes</th><th class="n">1 año</th></tr></thead>
       <tbody>${B.bolsas.map(r => `<tr><td class="strong">${r.n}</td><td class="n">${nf(r.v[0], 2)}</td>
-        <td class="n">${chg(r.v[1], { suf: "%", kind: "price" })}</td><td class="n">${chg(r.v[2], { suf: "%", kind: "price" })}</td><td class="n">${chg(r.v[3], { suf: "%", kind: "price" })}</td></tr>`).join("")}</tbody>`;
+        <td class="n strong">${chg(r.v[4], { suf: "%", kind: "price" })}</td><td class="n">${chg(r.v[1], { suf: "%", kind: "price" })}</td><td class="n">${chg(r.v[2], { suf: "%", kind: "price" })}</td><td class="n">${chg(r.v[3], { suf: "%", kind: "price" })}</td></tr>`).join("")}</tbody>`;
 
     $("#t-credito").innerHTML = `
       <thead><tr><th>Índice</th><th class="n">Último</th><th class="n">Δ 1 sem</th><th class="n">Δ 1 mes</th></tr></thead>
@@ -204,16 +207,16 @@
         <td class="n strong">${nf(r.act, 1)}</td><td class="n">${chg(r.act - r.sem, { d: 1, kind: "inv" })}</td><td class="n">${chg(r.act - r.mes, { d: 1, kind: "inv" })}</td></tr>`).join("")}</tbody>`;
 
     $("#t-divisas").innerHTML = `
-      <thead><tr><th>Par</th><th class="n">Spot</th><th class="n">1 sem</th><th class="n">1 año</th></tr></thead>
+      <thead><tr><th>Par</th><th class="n">Spot</th><th class="n">1 día</th><th class="n">1 sem</th><th class="n">1 año</th></tr></thead>
       <tbody>${B.divisas.map(r => `<tr><td class="strong">${r.n}</td><td class="n">${nf(r.v[0], r.d)}</td>
-        <td class="n">${chg(r.v[1], { suf: "%" })}</td><td class="n">${chg(r.v[3], { suf: "%" })}</td></tr>`).join("")}</tbody>`;
+        <td class="n strong">${chg(r.v[4], { suf: "%" })}</td><td class="n">${chg(r.v[1], { suf: "%" })}</td><td class="n">${chg(r.v[3], { suf: "%" })}</td></tr>`).join("")}</tbody>`;
 
     $("#t-materias").innerHTML = `
-      <thead><tr><th>Activo</th><th class="n">Último</th><th class="n">1 sem</th><th class="n">1 año</th></tr></thead>
-      <tbody>${B.materias.map(r => `<tr><td><span class="strong">${r.n}</span> <span class="dim" style="font-size:11px">${r.u}</span></td><td class="n">${nf(r.v[0], 2)}</td>
-        <td class="n">${chg(r.v[1], { suf: "%", kind: "price" })}</td><td class="n">${chg(r.v[3], { suf: "%", kind: "price" })}</td></tr>`).join("")}
-        <tr class="grp"><td colspan="4">Volatilidad</td></tr>
-        ${B.vol.map(r => `<tr><td class="strong">${r.n}</td><td class="n">${nf(r.v[0], 2)}</td><td class="n">${chg(r.v[1], { suf: "%", kind: "inv" })}</td><td class="n">${chg(r.v[3], { suf: "%", kind: "inv" })}</td></tr>`).join("")}</tbody>`;
+      <thead><tr><th>Activo</th><th class="n">Último</th><th class="n">1 día</th><th class="n">1 sem</th><th class="n">1 año</th></tr></thead>
+      <tbody>${B.materias.map(r => `<tr><td><span class="strong" title="${r.u}">${r.n}</span></td><td class="n">${nf(r.v[0], 2)}</td>
+        <td class="n strong">${chg(r.v[4], { suf: "%", kind: "price" })}</td><td class="n">${chg(r.v[1], { suf: "%", kind: "price" })}</td><td class="n">${chg(r.v[3], { suf: "%", kind: "price" })}</td></tr>`).join("")}
+        <tr class="grp"><td colspan="5">Volatilidad</td></tr>
+        ${B.vol.map(r => `<tr><td class="strong">${r.n}</td><td class="n">${nf(r.v[0], 2)}</td><td class="n strong">${chg(r.v[4], { suf: "%", kind: "inv" })}</td><td class="n">${chg(r.v[1], { suf: "%", kind: "inv" })}</td><td class="n">${chg(r.v[3], { suf: "%", kind: "inv" })}</td></tr>`).join("")}</tbody>`;
   }
 
   /* ================================================================ MACRO */
@@ -392,7 +395,7 @@
 
   /* ================================================================ GRÁFICOS */
   const charts = {};
-  let probRes = "BCE", bolsaIdx = 1, pibYear = "26";
+  let probRes = "BCE", bolsaIdx = B.bolsas.some(r => r.v[4] != null) ? 4 : 1, pibYear = "26";
   const curvasOn = { DE: true, ES: true, IT: true, FR: true, US: true, UK: true };
   const rfOn = { corp: true, DE: true, ES: true };
 
@@ -457,10 +460,10 @@
   }
 
   function bolsasChart() {
-    const rows = [...B.bolsas].sort((a, b) => b.v[bolsaIdx] - a.v[bolsaIdx]);
+    const rows = B.bolsas.filter(r => r.v[bolsaIdx] != null).sort((a, b) => b.v[bolsaIdx] - a.v[bolsaIdx]);
     const o = baseOpts();
     o.indexAxis = "y";
-    o.scales.x.ticks.callback = v => nf(v, 0) + "%";
+    o.scales.x.ticks.callback = v => nf(v, Number.isInteger(v) ? 0 : 1) + "%";
     o.scales.y.grid.display = false;
     o.scales.y.ticks.color = css("--text-2");
     o.plugins.tooltip.callbacks = { label: c => ` ${sign(c.parsed.x, 2)}%` };
@@ -522,6 +525,7 @@
   }
   seg("#seg-res-prob", k => { probRes = k; probChart("c-res-prob", k); });
   seg("#seg-bolsa", k => { bolsaIdx = +k; bolsasChart(); });
+  $$("#seg-bolsa button").forEach(b => b.setAttribute("aria-pressed", +b.dataset.k === bolsaIdx));
   seg("#seg-pib", k => { pibYear = k; pibChart(); });
 
   /* ---------------- Init ---------------- */

@@ -128,27 +128,27 @@
     <!-- MERCADOS -->
     <section class="view" id="v-mercados">
       <div class="grid g-12">
-        <div class="card span-7">
+        <div class="card span-5">
           <div class="card-h"><h2>Bolsas</h2><span class="meta">variación %</span>
-            <span class="right"><span class="seg" id="seg-bolsa"><button data-k="1" aria-pressed="true">1 sem</button><button data-k="2" aria-pressed="false">1 mes</button><button data-k="3" aria-pressed="false">1 año</button></span></span>
+            <span class="right"><span class="seg" id="seg-bolsa"><button data-k="4" aria-pressed="false">1 día</button><button data-k="1" aria-pressed="true">1 sem</button><button data-k="2" aria-pressed="false">1 mes</button><button data-k="3" aria-pressed="false">1 año</button></span></span>
           </div>
           <div class="card-b"><div class="chart"><canvas id="c-bolsas" aria-label="Variación bolsas"></canvas></div></div>
         </div>
-        <div class="card span-5">
+        <div class="card span-7">
           <div class="card-h"><h2>Índices</h2><span class="meta" id="idx-meta">cierre 16/10</span></div>
           <div class="card-b flush tbl-wrap"><table id="t-bolsas"></table></div>
         </div>
         <div class="card span-4">
           <div class="card-h"><h2>Crédito</h2><span class="meta">CDS índices, p.b.</span></div>
-          <div class="card-b flush tbl-wrap"><table id="t-credito"></table></div>
+          <div class="card-b flush tbl-wrap"><table class="compact" id="t-credito"></table></div>
         </div>
         <div class="card span-4">
           <div class="card-h"><h2>Divisas</h2><span class="meta">spot</span></div>
-          <div class="card-b flush tbl-wrap"><table id="t-divisas"></table></div>
+          <div class="card-b flush tbl-wrap"><table class="compact" id="t-divisas"></table></div>
         </div>
         <div class="card span-4">
           <div class="card-h"><h2>Materias primas y volatilidad</h2></div>
-          <div class="card-b flush tbl-wrap"><table id="t-materias"></table></div>
+          <div class="card-b flush tbl-wrap"><table class="compact" id="t-materias"></table></div>
         </div>
       </div>
     </section>

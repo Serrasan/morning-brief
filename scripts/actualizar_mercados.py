@@ -50,7 +50,8 @@ def serie(ticker):
         raise ValueError("sin datos")
     last_date = c.index[-1].date()
     last = float(c.iloc[-1])
-    out = {"v": last, "fecha": last_date.isoformat()}
+    out = {"v": last, "fecha": last_date.isoformat(),
+           "dia": float(c.iloc[-2]) if len(c) > 1 else None}  # cierre de la sesión anterior
     for k, d in (("sem", 7), ("mes", 30), ("anio", 365)):
         out[k] = ref_close(c, last_date, d)
     return out
