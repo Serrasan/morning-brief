@@ -1,14 +1,14 @@
 // Resumen diario. Lo actualiza la tarea programada cada mañana (lunes a viernes).
 window.RESUMEN = {
-  fecha: "2026-10-26",
-  titular: "Semana de bancos centrales con el petróleo en máximos de seis meses: Fed el miércoles, BCE el jueves y BoJ el viernes. El viernes cierra con PIB del 3T e IPC preliminares en Europa.",
+  fecha: "2026-10-27",
+  titular: "Alivio en periféricos y en Francia a la espera de la Fed: el OAT–Bund estrecha 15 pb y el BTP–Bund 10 pb, mientras el Brent cede desde máximos de seis meses por la mediación de Catar con Irán. Brasil (reelección de Lula) castiga a Santander y Telefónica.",
   claves: [
-    { tag: "Bancos centrales", txt: "Se esperan mantenimientos en los tres: Fed en 3,75–4,00% (mié 19:00), BCE con el depósito en 2,50% (jue 14:15) y BoJ en 1,25% (vie). El foco está en la guía para diciembre: el mercado da ~71% a una subida de la Fed y ~77% a una del BoJ; las opciones de subida del BCE en diciembre se han moderado." },
-    { tag: "Petróleo", txt: "El Brent cerró el viernes en 116,7 $ (+3,1%), máximo desde abril, tras nuevos ataques hutíes a Arabia Saudí; esta mañana cede hacia 114 $. Trump dice estar cerca de decidir entre un nuevo ataque a Irán o un acuerdo." },
-    { tag: "Treasuries", txt: "El UST 10A cerró el viernes en 5,00% (+5 pb) y el 2A en 4,69% (+5 pb), por el temor inflacionista del crudo. UMich final 48,0 con expectativas de inflación a 1 año en 4,7% y a 5 años en 3,5%." },
-    { tag: "Francia", txt: "El diferencial OAT–Bund 10A llega a ~170 pb, máximo desde 2011 (+29 pb en la semana). Moody's mantuvo el viernes el Aa3 con perspectiva negativa." },
-    { tag: "PMI", txt: "Los PMI flash de octubre moderan: compuesto Eurozona 51,9 (53,1), mínimo de cuatro meses; Alemania 52,8 (est. 53,3). Los costes de inputs suben al mayor ritmo desde mayo por energía y transporte." },
-    { tag: "Renta variable", txt: "Semana bajista en Europa: Euro Stoxx 50 −2,2%, CAC −2,2%, IBEX −1,7%, DAX −1,7%. En EE.UU. S&P 500 −0,5% y Dow −1,2% el viernes, con la venta extendiéndose más allá de la tecnología." },
-    { tag: "Hoy", txt: "Ifo de octubre a las 10:00 (est. 89,8; anterior 89,9). Mañana, EPA del 3T en España y Conference Board en EE.UU." }
+    { tag: "Bancos centrales", txt: "Arranca hoy el FOMC (decisión mañana 19:00): el mercado da solo ~10% a una subida en esta reunión tras la de septiembre; el foco es la guía para diciembre. BCE el jueves con el depósito en 2,50% y BoJ el viernes. Lagarde habla hoy a las 17:00." },
+    { tag: "Soberanos UE", txt: "Fuerte estrechamiento el lunes: OAT–Bund 10A en ~156 pb (−15 pb; OAT 4,93%) tras el mantenimiento del Aa3 por Moody's, desde 175 pb el 22-oct, máximo desde 2011. BTP–Bund en 112 pb (−10 pb; BTP 4,48%). Bono 10A ~4,01% con el Bund en ~3,37%: prima de riesgo española en torno a 64 pb." },
+    { tag: "Treasuries", txt: "UST 10A en 4,98% (−2 pb) y 2A en 4,71% (+2 pb): aplanamiento, con el 5s30s en 47,7 pb (51,6). La subasta de 2A (69.000 M$) colocó en 4,708%, ligeramente por encima del when-issued: demanda algo floja." },
+    { tag: "Petróleo y gas", txt: "El Brent liquidó el lunes cerca de 116 $ y esta mañana cede ~0,8% (WTI ~101 $) por la mediación de Catar en Teherán, aunque Trump no descarta nuevos ataques. El TTF sube a 96,4 €/MWh (+2,8%), máximo de cuatro años." },
+    { tag: "Divisas y RV", txt: "EUR/USD 1,117 y USD/JPY 157,6 (yen, el G10 más débil). El real brasileño se hundió >8% tras la reelección de Lula: Telefónica −6,4% y Santander −3,1%, pero el IBEX cerró +0,2% en 19.033. Euro Stoxx 50 +0,8%, S&P 500 +0,7% y Nasdaq +0,8% (OPV de Anthropic); el Nikkei sube ~2% esta mañana." },
+    { tag: "Datos", txt: "Ayer el Ifo de octubre sorprendió al alza: 90,2 (est. 89,8; ant. 89,9), sexta subida, por expectativas; la situación actual empeora levemente. Fed Dallas manufacturas 13,4 (9,8)." },
+    { tag: "Hoy", txt: "Confianza del consumidor en Francia (08:45), EPA del 3T en España (09:00; ant. 9,87%), pedidos de bienes duraderos de EE.UU. (13:30; est. 0,6%), Case-Shiller (14:00) y Conference Board (15:00; est. 80,5)." }
   ]
 };

@@ -3,7 +3,7 @@ window.CALENDARIO = {
  "hoja": null,
  "fuente": "Calendario elaborado a partir de prensa (Trading Economics, Saxo, Forex Trading Community); horas CET",
  "semana": "2026-10-26",
- "generado": "2026-10-26 09:38",
+ "generado": "2026-10-27 06:49",
  "dias": [
   {
    "fecha": "2026-10-26",
@@ -18,7 +18,7 @@ window.CALENDARIO = {
      "ultimo": "89,9",
      "id": "2026-10-26|DE|Ifo Clima empresarial",
      "imp": "alta",
-     "actual": ""
+     "actual": "90,2"
     },
     {
      "hora": "15:30",
@@ -29,7 +29,7 @@ window.CALENDARIO = {
      "ultimo": "9,8",
      "id": "2026-10-26|US|Fed Dallas manufacturas",
      "imp": "baja",
-     "actual": ""
+     "actual": "13,4"
     }
    ]
   },
